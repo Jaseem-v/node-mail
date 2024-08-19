@@ -51,8 +51,8 @@ const upload = multer({ storage: storage, fileFilter: fileFilter, limits: { file
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'muhammedjaseem753@gmail.com',
-        pass: 'vgigvferbaizgeah'
+        user: 'formsubmissionmail@gmail.com',
+        pass: 'hecvoyitjznjkosc'
     }
 });
 
@@ -123,8 +123,8 @@ app.post('/send-email', upload.single('file'), (req, res) => {
     `;
 
     const mailOptions = {
-        from: 'muhammedjaseem753@gmail.com',
-        to: 'info@jaseemv.com', // Send email to this address
+        from: 'formsubmissionmail@gmail.com',
+        to: 'hr@actgroup.com.sa', // Send email to this address
         subject: 'Job Application',
         html: emailBody,
         attachments: file ? [{
