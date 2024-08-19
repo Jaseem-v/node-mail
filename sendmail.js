@@ -8,12 +8,18 @@ const fs = require('fs');
 const app = express();
 const port = 7000;
 
+const corsOptions = {
+    origin: ['https://actgroup.com.sa','http://localhost:5500','http://127.0.0.1:5500'],
+    allowedHeaders: ['Content-Type',' Authorization'],
+//   credentials: true,
+};
+
 // Use CORS middleware
-app.use(cors());
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions));
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
