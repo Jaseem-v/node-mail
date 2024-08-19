@@ -9,17 +9,22 @@ const app = express();
 const port = 7000;
 
 const corsOptions = {
-    origin: ['https://actgroup.com.sa','http://localhost:5500','http://127.0.0.1:5500'],
-    allowedHeaders: ['Content-Type',' Authorization'],
-//   credentials: true,
+    origin: ['https://actgroup.com.sa', 'http://localhost:5500', 'http://127.0.0.1:5500'],
+    allowedHeaders: ['Content-Type', ' Authorization'],
+    //   credentials: true,
 };
 
 // Use CORS middleware
-
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // Allow all origins, or specify a domain
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allow specific methods
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
+    next();
+});
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(corsOptions));
+
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
