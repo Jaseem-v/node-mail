@@ -9,7 +9,7 @@ const app = express();
 const port = 7000;
 
 const corsOptions = {
-    origin: ['https://actgroup.com.sa','https://topglobalmovers.ae','https://www.topglobalmovers.ae', 'http://localhost:5500', 'http://127.0.0.1:5500'],
+    origin: ['https://actgroup.com.sa', 'https://topglobalmovers.ae', 'https://www.topglobalmovers.ae', 'http://localhost:5500', 'http://127.0.0.1:5500'],
     allowedHeaders: ['Content-Type', ' Authorization'],
     //   credentials: true,
 };
@@ -58,74 +58,15 @@ const transporter = nodemailer.createTransport({
 
 // API endpoint to send email with attachment
 app.post('/send-email', upload.single('file'), (req, res) => {
-    const { firstName, lastName, nationality, gender, dob, qualification, email, countryCode, phone, company, designation, experience, text } = req.body;
+    const { emailBody, email, subject } = req.body;
     const file = req.file;
 
     // Format the email body with HTML and inline CSS
-    const emailBody = `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-            <h2 style="color: #1a73e8;">Job Application Details</h2>
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr style="background-color: #f4f4f4;">
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>First Name:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${firstName}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Last Name:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${lastName}</td>
-                </tr>
-                <tr style="background-color: #f4f4f4;">
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Nationality:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${nationality}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Gender:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${gender}</td>
-                </tr>
-                <tr style="background-color: #f4f4f4;">
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Date of Birth:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${dob}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Educational Qualification:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${qualification}</td>
-                </tr>
-                <tr style="background-color: #f4f4f4;">
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Email Address:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${email}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Country Code:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${countryCode}</td>
-                </tr>
-                <tr style="background-color: #f4f4f4;">
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Phone Number:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${phone}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Current Company Name:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${company}</td>
-                </tr>
-                <tr style="background-color: #f4f4f4;">
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Current Designation:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${designation}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Total Experience:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${experience} years</td>
-                </tr>
-                <tr style="background-color: #f4f4f4;">
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Cover Letter:</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${text}</td>
-                </tr>
-            </table>
-        </div>
-    `;
 
     const mailOptions = {
         from: 'formsubmissionmail@gmail.com',
-        to: 'hr@actgroup.com.sa', // Send email to this address
-        subject: 'Job Application',
+        to: email,
+        subject: subject,
         html: emailBody,
         attachments: file ? [{
             filename: file.originalname,
