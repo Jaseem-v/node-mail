@@ -9,7 +9,7 @@ const app = express();
 const port = 7000;
 
 const corsOptions = {
-    origin: ['https://actgroup.com.sa', 'http://localhost:5500', 'http://127.0.0.1:5500'],
+    origin: ['https://actgroup.com.sa','https://topglobalmovers.ae','https://www.topglobalmovers.ae', 'http://localhost:5500', 'http://127.0.0.1:5500'],
     allowedHeaders: ['Content-Type', ' Authorization'],
     //   credentials: true,
 };
